@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+.transition__effect {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.container__primary {
+  @apply w-[92%] mx-auto
+}
