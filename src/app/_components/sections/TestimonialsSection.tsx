@@ -52,9 +52,7 @@ export function TestimonialsSection() {
                                     <p className="text-slate-200 text-lg mb-6 italic leading-relaxed">"{testimonial.message}"</p>
                                     <div className="border-t border-blue-500/20 pt-6">
                                         <p className="font-bold text-white text-lg">{testimonial.name}</p>
-                                        {testimonial.company && (
-                                            <p className="text-cyan-400 text-sm mt-1">{testimonial.company}</p>
-                                        )}
+
                                     </div>
                                 </div>
                             </SwiperSlide>
