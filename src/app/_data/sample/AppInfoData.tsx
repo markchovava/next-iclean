@@ -9,8 +9,16 @@ export const AppInfoData = {
         sparkling results and a healthier environment.
     `,
     socials: [
-        { iconType: 'facebook', href: '#', name: 'Facebook' },
-        { iconType: 'instagram', href: '#', name: 'Instagram' },
+        {
+            iconType: 'tiktok',
+            href: 'https://www.tiktok.com/@_icleanservices_?_r=1&_t=ZS-96K2ViNaAYK',
+            name: 'Tiktok'
+        },
+        {
+            iconType: 'instagram',
+            href: 'https://www.instagram.com/_icleanservices_',
+            name: 'Instagram'
+        },
     ],
     address: '31152 Unit G Ext Seke Chitungwiza',
     email: 'info@icleanservices.co.zw',

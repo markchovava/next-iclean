@@ -4,8 +4,9 @@ import LogoImage from '../logos/LogoImage';
 import { AppInfoData } from '@/app/_data/sample/AppInfoData';
 import { useNavStore } from '@/app/_data/store/useNavStore';
 import IconDefault from '../icons/IconDefault';
-import { SocialData } from '@/app/_data/sample/NavData';
 import { ServiceData } from '@/app/_data/sample/ServiceData';
+
+
 
 export function Footer() {
     const { navlist } = useNavStore()
