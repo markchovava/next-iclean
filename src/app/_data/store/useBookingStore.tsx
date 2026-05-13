@@ -123,6 +123,12 @@ export const useBookingStore = create<Props>((set, get) => ({
             errors.email = emailError;
             hasError = true;
         }
+        // Validate ADDRESS
+        const addressError = get().validateField("address", data.address);
+        if (addressError) {
+            errors.address = addressError;
+            hasError = true;
+        }
         // Validate WEBSITE
         const preferredDateError = get().validateField("preferredDate", data.preferredDate);
         if (preferredDateError) {

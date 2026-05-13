@@ -7,12 +7,65 @@ import TextInput from '../forms/inputs/TextInput';
 import Title from '../titles/Title';
 import { AppInfoData } from '@/app/_data/sample/AppInfoData';
 import IconDefault from '../icons/IconDefault';
+import { emailRequestAction } from '@/app/_data/api/actions/ServiceActions';
+import { toast } from 'react-toastify';
 
 export function ContactSection() {
-    const { data, isSubmitting, errors, setInputValue, setIsSubmitting } = useContactStore()
+    const {
+        data,
+        isSubmitting,
+        errors,
+        clearErrors,
+        validateForm,
+        setInputValue,
+        setIsSubmitting
+    } = useContactStore()
 
 
-    const handleSubmit = async () => {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        clearErrors();
+        e.preventDefault();
+        // Validate form using store
+        const validation = validateForm();
+        if (!validation.isValid) {
+            // Show the first error as toast
+            const firstError = validation.errors.name ||
+                validation.errors.phone ||
+                validation.errors.email ||
+                validation.errors.address
+            toast.warn(firstError);
+            return;
+        }
+        setIsSubmitting(true);
+        const formData = {
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            address: data.address,
+        }
+        try {
+            const res = await emailRequestAction(formData);
+            console.log('res', res)
+            const { status, message } = res
+            switch (status) {
+                case 1:
+                    toast.success(message)
+                    setIsSubmitting(false)
+                    return
+                case 0:
+                    toast.warn(message)
+                    setIsSubmitting(false)
+                    return
+                default:
+                    toast.warn(ErrorData.error1)
+                    setIsSubmitting(false)
+                    return
+            }
+        } catch (error) {
+            toast.error(ErrorData.error1);
+            console.error('Error:', error);
+            setIsSubmitting(false);
+        }
 
     }
 
@@ -128,6 +181,15 @@ export function ContactSection() {
                                     placeholder='Enter your Email.'
                                     onChange={setInputValue}
                                     error={errors.email}
+                                />
+                                <TextInput
+                                    label='Address'
+                                    name='address'
+                                    type="text"
+                                    value={data.address}
+                                    placeholder='Enter your Address.'
+                                    onChange={setInputValue}
+                                    error={errors.address}
                                 />
 
                                 <motion.button
