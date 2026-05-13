@@ -9,11 +9,14 @@ import Button from '../buttons/Button';
 import { useBookingStore } from '@/app/_data/store/useBookingStore';
 import SelectInput from '../forms/selects/SelectInput';
 import { PropertySizeData } from '@/app/_data/sample/PropertySizeData';
+import { toast } from 'react-toastify';
+import { emailServiceAction } from '@/app/_data/api/actions/ServiceActions';
+import { formatDate } from '@/_utils/formatDate';
 
 
 
 
-const title = "Book your Service"
+const title = "Book Your Service"
 
 
 const variants: Variants = {
@@ -36,12 +39,65 @@ export default function ServiceModal() {
         clearErrors,
     } = useServiceStore()
 
-    const { data, errors, isSubmitting, setInputValue } = useBookingStore()
+    const {
+        data,
+        errors,
+        isSubmitting,
+        setIsSubmitting,
+        setInputValue,
+        validateForm,
+    } = useBookingStore()
 
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         clearErrors();
         e.preventDefault();
+        // Validate form using store
+        const validation = validateForm();
+        if (!validation.isValid) {
+            // Show the first error as toast
+            const firstError = validation.errors.name ||
+                validation.errors.phone ||
+                validation.errors.email ||
+                validation.errors.preferredDate ||
+                validation.errors.propertySize;
+            toast.warn(firstError);
+            return;
+        }
+        setIsSubmitting(true);
+        const formData = {
+            service: selectedData.name,
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            address: data.address,
+            preferredDate: formatDate(data.preferredDate),
+            propertySize: data.propertySize,
+        }
+        try {
+            const res = await emailServiceAction(formData);
+            console.log('res', res)
+            const { status, message } = res
+            switch (status) {
+                case 1:
+                    toast.success(message)
+                    setIsSubmitting(false)
+                    return
+                case 0:
+                    toast.warn(message)
+                    setIsSubmitting(false)
+                    return
+                default:
+                    toast.warn(ErrorData.error1)
+                    setIsSubmitting(false)
+                    return
+            }
+        } catch (error) {
+            toast.error(ErrorData.error1);
+            console.error('Error:', error);
+            setIsSubmitting(false);
+        }
+
     }
 
 
@@ -86,7 +142,16 @@ export default function ServiceModal() {
                                     value={data.phone}
                                     placeholder='Enter your phone.'
                                     onChange={setInputValue}
-                                    error={errors.name}
+                                    error={errors.phone}
+                                />
+                                <TextInput
+                                    label='Address'
+                                    name='address'
+                                    type="text"
+                                    value={data.address}
+                                    placeholder='Enter your Address.'
+                                    onChange={setInputValue}
+                                    error={errors.address}
                                 />
 
                                 <TextInput
@@ -120,6 +185,8 @@ export default function ServiceModal() {
                                 <div className='flex items-center justify-center'>
                                     <Button
                                         name='Submit'
+                                        status={isSubmitting}
+                                        type='submit'
                                     />
                                 </div>
                             </form>
