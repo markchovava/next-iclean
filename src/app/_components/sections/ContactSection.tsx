@@ -171,7 +171,7 @@ export function ContactSection() {
                                     name='phone'
                                     type="text"
                                     value={data.phone}
-                                    placeholder='Enter your Name.'
+                                    placeholder='Enter your Phone Number.'
                                     onChange={setInputValue}
                                     error={errors.phone}
                                 />
