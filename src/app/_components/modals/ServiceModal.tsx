@@ -82,6 +82,7 @@ export default function ServiceModal() {
                 case 1:
                     toast.success(message)
                     setIsSubmitting(false)
+                    setToggleModal()
                     return
                 case 0:
                     toast.warn(message)
