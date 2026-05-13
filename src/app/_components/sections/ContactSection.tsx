@@ -18,7 +18,8 @@ export function ContactSection() {
         clearErrors,
         validateForm,
         setInputValue,
-        setIsSubmitting
+        setIsSubmitting,
+        resetData,
     } = useContactStore()
 
 
@@ -51,6 +52,7 @@ export function ContactSection() {
                 case 1:
                     toast.success(message)
                     setIsSubmitting(false)
+                    resetData();
                     return
                 case 0:
                     toast.warn(message)

@@ -8,6 +8,7 @@ interface Props {
     errors: BookingInterface
     toggleModal: boolean
     isSubmitting: boolean
+    resetData: () => void
     clearErrors: () => void
     setIsSubmitting: (i: boolean) => void
     setToggleModal: () => void
@@ -26,6 +27,11 @@ export const useBookingStore = create<Props>((set, get) => ({
     errors: BookingEntity,
     toggleModal: false,
     isSubmitting: false,
+    resetData: () => {
+        set({
+            data: BookingEntity
+        })
+    },
     clearErrors: () => {
         set({
             errors: BookingEntity

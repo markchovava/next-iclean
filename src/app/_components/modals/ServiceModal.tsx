@@ -36,7 +36,6 @@ export default function ServiceModal() {
         toggleModal,
         selectedData,
         setToggleModal,
-        clearErrors,
     } = useServiceStore()
 
     const {
@@ -46,6 +45,8 @@ export default function ServiceModal() {
         setIsSubmitting,
         setInputValue,
         validateForm,
+        resetData,
+        clearErrors,
     } = useBookingStore()
 
 
@@ -83,6 +84,8 @@ export default function ServiceModal() {
                     toast.success(message)
                     setIsSubmitting(false)
                     setToggleModal()
+                    resetData()
+                    clearErrors()
                     return
                 case 0:
                     toast.warn(message)
