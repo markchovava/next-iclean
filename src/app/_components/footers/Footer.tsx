@@ -33,7 +33,7 @@ export function Footer() {
                         </p>
                         <div className="flex space-x-6">
                             {AppInfoData.socials.map((i, key) => (
-                                <Link key={key} href={i.href} className="w-10 h-10 rounded-lg bg-linear-to-br from-blue-500 to-blue-500 flex items-center justify-center hover:shadow-lg hover:shadow-blue-500/50 transition-all group">
+                                <Link key={key} target='_blank' href={i.href} className="w-10 h-10 rounded-lg bg-linear-to-br from-blue-500 to-blue-500 flex items-center justify-center hover:shadow-lg hover:shadow-blue-500/50 transition-all group">
                                     <IconDefault type={i.iconType} css='text-white text-2xl' />
                                 </Link>
 
